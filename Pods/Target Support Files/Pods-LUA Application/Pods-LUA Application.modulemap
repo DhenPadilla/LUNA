@@ -1,0 +1,6 @@
+framework module Pods_LUA_Application {
+  umbrella header "Pods-LUA Application-umbrella.h"
+
+  export *
+  module * { export * }
+}
