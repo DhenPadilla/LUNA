@@ -14,7 +14,6 @@ target 'LUA Application' do
   pod 'Firebase/Database'
   pod 'Firebase/Auth'
   pod 'Firebase/Storage'
-  pod 'InMobiSDK'
   pod 'AutoScrollLabel'
 
 end
