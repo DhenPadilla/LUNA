@@ -115,6 +115,7 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, UIWebViewDele
         if let accessToken = currentUser.getUserID() as? String {
             print("ACCESS TOKEN FROM LUNA: " + accessToken)
         }
+        
         FBSDKGraphRequest(graphPath: "/me", parameters: ["Fields": "id, name, email"]).start { (connection, result, err) in
             
             if err != nil {
@@ -167,43 +168,41 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, UIWebViewDele
     
     func tryAccessingLUNAUser(url: URL) {
         guard let url = url as? URL else { return }
+        
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             if error != nil {
                 print(error!.localizedDescription)
             }
             
             guard let data = data else { return }
+            
+            var accessToken = ""
+            
             do {
-                print("DATA: " + String(describing: data))
-                
-                var accessToken = ""
-                
-                //Decode retrived data with JSONDecoder and assing type of Article object
-                if let info = data as? [String: Any] {
-                    print("DATA: \(info)")
-                    accessToken = info["access_token"] as! String
-                    print("GOT ACCESS TOKEN: \(accessToken)")
+                if let json = try JSONSerialization.jsonObject(with: data) as? [String: Any] {
+                    // Parse JSON
+                    print("JSON RESPONSE: " + String(describing: json))
+                    if let accessT = json["access_token"] {
+                        accessToken = String(describing: accessT)
+                        print("ACCESS TOKEN: " + String(describing: accessT))
+                        
+                    }
                 }
                 
                 //Get back to the main queue
                 DispatchQueue.main.async {
-                    //print(articlesData)
                     self.currentUser.setAccessToken(token: accessToken)
+                    self.showFacebookEmailAddress()
                 }
             }
-            
+                
+            catch let parseError {
+                print("parsing error: \(parseError)")
+                let responseString = String(data: data, encoding: .utf8)
+                print("raw response: \(responseString)")
+            }
         }.resume()
     }
-    
-    func checkForFBAccessTokenAndDismiss() {
-        let transitionAnimator = UIViewPropertyAnimator(duration: 1, dampingRatio: 1, animations: {
-            self.topConstraint = self.facebookLunaAuthenticationView.topAnchor.constraint(equalTo: self.view.bottomAnchor)
-            self.view.layoutIfNeeded()
-        })
-        transitionAnimator.startAnimation()
-        webViewIsOpen = false
-    }
-    
     
     func setupFacebookLoginRegisterButton() {
         for const in facebookLoginRegisterButton.constraints{
@@ -242,15 +241,15 @@ class LoginController: UIViewController, FBSDKLoginButtonDelegate, UIWebViewDele
             return
         }
         
-        showFacebookEmailAddress()
+        //showFacebookEmailAddress()
     }
     
     func showFacebookEmailAddress() {
         
         //Create Facebook Access Token
-        let accessToken = FBSDKAccessToken.current()
-        guard let accessTokenString = accessToken?.tokenString else {
-            return
+        if let accessToken = self.currentUser.getAccessToken() as? String {
+            let AT = FBSDKAccessToken(tokenString: accessToken, permissions: nil, declinedPermissions: nil, appID: nil, userID: nil, expirationDate: nil, refreshDate: nil)
+            FBSDKAccessToken.setCurrent(AT)
         }
         
         FBSDKGraphRequest(graphPath: "/me", parameters: ["Fields": "id, name, email"]).start { (connection, result, err) in

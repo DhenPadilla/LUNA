@@ -34,6 +34,14 @@ class User: NSObject {
         }
     }
     
+    func getAccessToken() -> String {
+        var token = ""
+        if let t = self.accessToken as? String {
+            token = t
+        }
+        return token
+    }
+    
     func getProfilePic() -> UIImage {
         var picture = UIImage()
         if let pic = self.picture {
