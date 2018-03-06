@@ -52,7 +52,6 @@ PODS:
     - GoogleToolboxForMac/NSString+URLArguments (= 2.1.1)
   - GoogleToolboxForMac/NSString+URLArguments (2.1.1)
   - GTMSessionFetcher/Core (1.1.9)
-  - InMobiSDK (7.0.4)
 
 DEPENDENCIES:
   - AutoScrollLabel
@@ -63,7 +62,6 @@ DEPENDENCIES:
   - Firebase/Core
   - Firebase/Database
   - Firebase/Storage
-  - InMobiSDK
 
 SPEC CHECKSUMS:
   AutoScrollLabel: bee53a1d4532569b49cbecaf9b80ca003bed3767
@@ -80,8 +78,7 @@ SPEC CHECKSUMS:
   FirebaseStorage: a5c55b23741a49a72af8f30f95b3bb5ddbeda12d
   GoogleToolboxForMac: 8e329f1b599f2512c6b10676d45736bcc2cbbeb0
   GTMSessionFetcher: 5c046c76a1f859bc9c187e918f18e4fc7bb57b5e
-  InMobiSDK: 71c77f9f07260fe6d7cabf789d071e50007c7546
 
-PODFILE CHECKSUM: 323ebcfd1f816875a141c7c7983d158bf2ff8325
+PODFILE CHECKSUM: f0c5ff76a531fee03eacedccfb3774ac62599fe9
 
 COCOAPODS: 1.2.1

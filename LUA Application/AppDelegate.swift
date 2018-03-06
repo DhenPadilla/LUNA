@@ -9,7 +9,7 @@
 import UIKit
 import FBSDKCoreKit
 import Firebase
-import InMobiSDK
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,11 +22,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let defaults = UserDefaults.standard
         
         defaults.setValue(false, forKey: "_UIConstraintBasedLayoutLogUnsatisfiable")
-        
-        IMSdk.initWithAccountID("4ed1d00d80ba4db98ad660f8a52b87d3")
-        
-        // Do your stuff.
-        IMSdk.setAgeGroup(.between18And24)
         
         //Collection View Layout for Home Screen
         let layout = UICollectionViewFlowLayout()

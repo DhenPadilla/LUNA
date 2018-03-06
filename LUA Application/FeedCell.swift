@@ -7,62 +7,10 @@
 //
 
 import UIKit
-import InMobiSDK.IMNative
-import InMobiSDK.IMNativeDelegate
 import MapKit
 
-class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, IMNativeDelegate, CLLocationManagerDelegate, MKMapViewDelegate {
+class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout,  CLLocationManagerDelegate, MKMapViewDelegate {
     
-    /*** InMobi Native Delegate Protocol required functions ***/
-    var InMobiNativeAd: IMNative?
-    let IM_AD_INSERTION_POSITION = 4
-    
-    func nativeDidFinishLoading(_ native: IMNative!) {
-        self.collectionView.insertSubview(native.primaryView(ofWidth: self.collectionView.frame.size.width), at: IM_AD_INSERTION_POSITION)
-        self.collectionView.reloadData()
-        NSLog("InMobi Native Did finished loading");
-    }
-    
-    func native(_ native: IMNative!, didInteractWithParams params: [AnyHashable : Any]!) {
-        print("didInteractWithParams")
-    }
-    
-    func nativeDidFinishPlayingMedia(_ native: IMNative!) {
-        print("nativeDidFinishPlayingMedia")
-    }
-    
-    func native(_ native: IMNative!, didFailToLoadWithError error: IMRequestStatus!) {
-        print("didFailToLoadWithError")
-    }
-    
-    func nativeWillPresentScreen(_ native: IMNative!) {
-        print("nativeWillPresentScreen")
-    }
-    
-    func nativeDidPresentScreen(_ native: IMNative!) {
-        print("nativeDidPresentScreen")
-    }
-    
-    func nativeWillDismissScreen(_ native: IMNative!) {
-        print("nativeWillDismissScreen")
-    }
-    
-    func nativeDidDismissScreen(_ native: IMNative!) {
-        print("nativeDidDismissScreen")
-    }
-    
-    func userWillLeaveApplication(from native: IMNative!) {
-        print("userWillLeaveApplication")
-    }
-    
-    func nativeAdImpressed(_ native: IMNative!) {
-        print("nativeAdImpressed")
-    }
-    
-    func isAdAtIndexPath(indexPath: Int) -> Bool {
-        if indexPath == IM_AD_INSERTION_POSITION { return true }
-        else { return false }
-    }
     
     var events = Events.sharedEventsModel.getEvents()
     
@@ -89,19 +37,9 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
         self.collectionView.reloadData()
         self.reloadEvents()
     }
-
-    //InMobi Delegation:
-    func loadUpInMobi() {
-        //InMobi Ads initialisation
-        InMobiNativeAd = IMNative(placementId: 1517004873829)
-        InMobiNativeAd?.delegate = self
-        InMobiNativeAd?.load()
-    }
     
     override func setupViews() {
         super.setupViews()
-        
-        loadUpInMobi()
         
         getFacebookEvents()
         
@@ -128,6 +66,8 @@ class FeedCell: BaseCell, UICollectionViewDataSource, UICollectionViewDelegate, 
         
         return cell
     }
+    
+    
     
     // On select: Present new 'EventViewController'
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

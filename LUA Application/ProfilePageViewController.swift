@@ -7,108 +7,178 @@
 //
 
 import UIKit
+import Firebase
+import FBSDKLoginKit
 
-class ProfilePageView: UIViewController , UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+class ProfilePageView: UIViewController {
+    // Initialise FBSDKClass:
+    let fbsdk = FacebookSDKCall.sharedApiInstance
+    
+//    ONLY HAS THE 3 FOLLOWING BUTTONS:
+//      - SOCIETY LIST BUTTON
+//      - LOGOUT BUTTON
+//      - OTHER SETTINGS BUTTON
+//      - NOTE: MAY ADD `CHANGE UNI` BUTTON
     
     let cellId = "cellId"
     
     
-    let settings: [Setting] = {
-        return [Setting(name: "Log Out"), Setting(name: "Manage Societies"), Setting(name: "Privacy Settings"), Setting(name: "Change Password"), Setting(name: "Change Email"), Setting(name: "Manage Location Services"), Setting(name: "Deactivate")]
-    }()
-    
-    lazy var collectionView: UICollectionView = {
-        let layout = UICollectionViewFlowLayout()
-        let cv = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        cv.dataSource = self
-        cv.delegate = self
-        cv.backgroundColor = .white
-        return cv
-    }()
-    
+    // PROFILE PICTURE VIEW
     let profileImage: UIImageView = {
         let view = UIImageView()
-        view.image = UIImage()
+        //view.image = UIImage()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = .blue
-        view.layer.cornerRadius = 25
+        view.backgroundColor = .clear
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.white.cgColor
+        view.layer.cornerRadius = 62
         return view
     }()
     
-    let headerImage: UIImageView = {
-        let view = UIImageView()
-        view.image = UIImage()
+    
+    // BUTTON IMPLEMENTATION:
+    // 1: SOCIETY LIST BUTTON
+    let societyList: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(named: "Society List"), for: .normal)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.backgroundColor = UIColor.init(r: 16, g: 59, b: 48)
         return view
     }()
     
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(true)
+    // 2: OTHER SETTINGS BUTTON
+    let settingsButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(named: "Settings Button"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    // 3: LOGOUT BUTTON
+    let logoutButton: UIButton = {
+        let view = UIButton()
+        view.setImage(UIImage(named: "Logout Button"), for: .normal)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+    
+    // BACKGROUND GRADIENT ANIMATION
+    let gradient: CAGradientLayer = {
+        let MAIN_COLOUR = UIColor(r: 24, g: 32, b: 49)
+        let SECONDARY_COLOUR = UIColor(r: 115, g: 125, b: 150)
+        let TERTIARY_COLOUR = UIColor(r: 200, g: 200, b: 215)
         
-        view.addSubview(headerImage)
-        view.addSubview(profileImage)
-        view.addSubview(collectionView)
+        let g = CAGradientLayer()
+        g.colors = [MAIN_COLOUR.cgColor, SECONDARY_COLOUR.cgColor, TERTIARY_COLOUR.cgColor]
+        g.locations = [0.0, 0.75, 1.0]
+        g.startPoint = CGPoint(x: 0.0, y: 0.0)
+        g.endPoint = CGPoint(x: 1.0, y: 1.0)
         
-        setupPageView()
-        setupImageViews()
-        setupCollectionView()
+        return g
+    }()
+    
+    // GRABBING FACEBOOK PROFILE PICTURE
+    func getProfilePic() {
+        let pic = fbsdk.getUserProfilePicture()
+        profileImage.image = pic
+        profileImage.contentMode = .scaleAspectFill
     }
     
-    func setupPageView() {
-        view.backgroundColor = .white
-        view.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        view.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        view.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        view.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+    
+    // MAIN VIEW DID LOAD
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        gradient.frame = self.view.frame
+        self.view.layer.insertSublayer(gradient, at: 0)
+        
+        getProfilePic()
+        self.view.addSubview(profileImage)
+        self.view.addSubview(societyList)
+        self.view.addSubview(settingsButton)
+        self.view.addSubview(logoutButton)
+        
+        logoutButton.addTarget(self, action: #selector(handleLogout), for: .touchUpInside)
+     
+        setupViews()
+        animateGradient()
     }
     
-    func setupImageViews() {
-        let headerHeight = (self.view.frame.height / 10) * 2
+    func setupViews() {
+        //Profile Image
+        profileImage.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        profileImage.centerYAnchor.constraint(equalTo: self.view.centerYAnchor, constant: -100).isActive = true
+        profileImage.widthAnchor.constraint(equalToConstant: 125).isActive = true
+        profileImage.heightAnchor.constraint(equalToConstant: 125).isActive = true
         
-        //Setup header View
-        headerImage.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
-        headerImage.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        headerImage.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        headerImage.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+        // Society List Button
+        societyList.centerXAnchor.constraint(equalTo: self.view.centerXAnchor).isActive = true
+        societyList.topAnchor.constraint(equalTo: profileImage.bottomAnchor, constant: 40).isActive = true
+        societyList.widthAnchor.constraint(equalToConstant: 65).isActive = true
+        societyList.heightAnchor.constraint(equalToConstant: 65).isActive = true
         
-        //Setup Profile image
-        profileImage.topAnchor.constraint(equalTo: self.view.topAnchor, constant: (headerHeight - 35)).isActive = true
-        profileImage.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        profileImage.leftAnchor.constraint(greaterThanOrEqualTo: self.view.leftAnchor, constant: 50).isActive = true
-        profileImage.widthAnchor.constraint(equalToConstant: 70).isActive = true
+        // Settings Button
+        settingsButton.rightAnchor.constraint(equalTo: societyList.leftAnchor, constant: -40).isActive = true
+        settingsButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -115).isActive = true
+        settingsButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        settingsButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        // Logout Button
+        logoutButton.leftAnchor.constraint(equalTo: societyList.rightAnchor, constant: 40).isActive = true
+        logoutButton.bottomAnchor.constraint(equalTo: self.view.bottomAnchor, constant: -115).isActive = true
+        logoutButton.widthAnchor.constraint(equalToConstant: 40).isActive = true
+        logoutButton.heightAnchor.constraint(equalToConstant: 40).isActive = true
     }
     
-    func setupCollectionView() {
-        let headerHeight = (self.view.frame.height / 10) * 2
-        
-        collectionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: headerHeight).isActive = true
-        collectionView.leftAnchor.constraint(equalTo: self.view.leftAnchor).isActive = true
-        collectionView.widthAnchor.constraint(equalTo: self.view.widthAnchor).isActive = true
-        collectionView.rightAnchor.constraint(equalTo: self.view.rightAnchor).isActive = true
+    func animateGradient() {
+        let gradientAnimation = CABasicAnimation(keyPath: "endPoint")
+        gradientAnimation.fromValue = CGPoint(x: 3.0, y: 3.0)
+        gradientAnimation.toValue = CGPoint(x: 1.0, y: 1.0)
+        gradientAnimation.duration = 3
+        gradientAnimation.autoreverses = true
+        gradientAnimation.repeatCount = .infinity
+        gradient.add(gradientAnimation, forKey: nil)
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return settings.count
+    /**** LOGOUT ****/
+    
+    //Handle logout methods
+    func handleLogout() {
+        
+        do {
+            try FIRAuth.auth()?.signOut()
+            
+        } catch let logoutError {
+            print(logoutError)
+        }
+        
+        handleFacebookLogout()
+        
+        let loginController = LoginController()
+        present(loginController, animated: true, completion: nil)
+        UIApplication.shared.statusBarStyle = .default
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    //Facebook Logout Handle
+    func handleFacebookLogout() {
+        let loginManager = FBSDKLoginManager()
+        let accessToken = FBSDKAccessToken.current()
+        guard let accessTokenString = accessToken?.tokenString else {
+            return
+        }
         
-        let setting = settings[indexPath.item]
+        let userRequest = FBSDKGraphRequest(graphPath: "/me", parameters: ["fields":"email, name"], tokenString: accessTokenString, version: nil, httpMethod: "GET")
         
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as! SettingsCell
+        let user = userRequest?.start { (connection, result, err) in
+            
+            if err != nil {
+                print("Failed to start graph request", err ?? "Unknown error")
+                return
+            }
+            
+            print(result ?? "I don't know what happened")
+        }
         
-        cell.setting = setting
-        
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        
-        return CGSize(width: collectionView.frame.width, height: 50)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 0
+        loginManager.logOut()
+        print("Successfully logged out user:", user ?? "Unknown user")
     }
 }

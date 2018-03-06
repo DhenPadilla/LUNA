@@ -22,7 +22,7 @@ class FacebookSDKCall: NSObject {
         if accessToken != nil {
             _ = FBSDKGraphRequest(graphPath: "/me", parameters: ["Fields": "id"]).start(completionHandler: { (connection, result, error) in
                 if error != nil {
-                    print("Failed to start graph request to userID in FaceboookSDKCall class")
+                    print("Failed to start graph request to userID in FacebookSDKCall class")
                     return
                 }
                 
@@ -39,6 +39,38 @@ class FacebookSDKCall: NSObject {
             })
         }
         return currentId
+    }
+    
+    func getUserProfilePicture() -> UIImage {
+        var profilePic: UIImage = UIImage()
+        if accessToken != nil {
+            _ = FBSDKGraphRequest(graphPath: "/me/", parameters: ["Fields" : "picture.type(large)"]).start(completionHandler: { (connection, result, error) in
+                if error != nil {
+                    print("Failed to start graph request to userID in FacebookSDKCall class")
+                    return
+                }
+                
+                else {
+                    print(String(describing: connection))
+                    // Get Dictionary
+                    if let result = result as? [String: Any], let data = result["data"] as? [String: Any] {
+                        if let url = data["url"] {
+                            if let eventPictureURL = URL(string: String(describing: url)) {
+                                URLSession.shared.dataTask(with: eventPictureURL, completionHandler: { (data, response, error) in
+                                    if error != nil {
+                                        print(String(describing: error))
+                                        return
+                                    }
+                                    
+                                    profilePic = UIImage(data: data!)!
+                                }).resume()
+                            }
+                        }
+                    }
+                }
+            })
+        }
+        return profilePic
     }
     
     func getUserEvents() {

@@ -19,6 +19,7 @@ class Event: NSObject {
     var eventDescription: String?
     var eventID: String?
     var eventRSVP: String?
+    
     // Location variables
     var eventLocationStreet: String?
     var eventLocationCity: String?

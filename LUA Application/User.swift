@@ -5,21 +5,41 @@
 //  Created by Dhen Padilla on 01/10/2017.
 //  Copyright © 2017 dhenpadilla. All rights reserved.
 //
-/*
+
 import UIKit
 
 class User: NSObject {
-    var userID: String
-    var firstName: String
-    var lastName: String
-    var universityAttending: String
-    var universityEmail: String
-    var email: String
-    var attending: Bool
+    static let sharedUser = User()
     
-    init(id: String, firstName: String, lastName: String, uni: String, uniEmail: String, persEmail: String, attending: Bool) {
-        <#statements#>
+    var userID: String?
+    var picture: UIImage?
+    var universityAttending: String?
+    var universityEmail: String?
+    var email: String?
+    var accessToken: String?
+    
+    var societies: [String]?
+    
+    func getUserID() -> String {
+        var id = ""
+        if let uid = self.userID {
+            id = uid
+        }
+        return id
     }
     
+    func setAccessToken(token: String) {
+        if let t = token as? String {
+            self.accessToken = t
+        }
+    }
+    
+    func getProfilePic() -> UIImage {
+        var picture = UIImage()
+        if let pic = self.picture {
+            picture = pic
+        }
+        return picture
+    }
 }
-*/
+

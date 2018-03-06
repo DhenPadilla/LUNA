@@ -10,7 +10,6 @@
 		6049C1F66076CB8B28D018B5 /* Pods_LUA_Application.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D476AB3978FCC48E3ECF471 /* Pods_LUA_Application.framework */; };
 		6F16656620264BE300CA14AA /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F16656520264BE300CA14AA /* libsqlite3.0.tbd */; };
 		6F16656820264BEC00CA14AA /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F16656720264BEC00CA14AA /* libz.tbd */; };
-		6F16656A20264CDA00CA14AA /* InMobiSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F16656920264CDA00CA14AA /* InMobiSDK.framework */; };
 		6F16656C20264CF200CA14AA /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F16656B20264CE500CA14AA /* WebKit.framework */; };
 		6F18EA51202A55FA008A0FD6 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F18EA50202A55FA008A0FD6 /* MapKit.framework */; };
 		6F320FE41F668B0B009ED6DF /* FilterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F320FE31F668B0B009ED6DF /* FilterCell.swift */; };
@@ -33,6 +32,8 @@
 		6F6271A8201BF9A6008A9AF2 /* SettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6271A7201BF9A6008A9AF2 /* SettingsCell.swift */; };
 		6F6271AA201BF9E6008A9AF2 /* Setting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6271A9201BF9E6008A9AF2 /* Setting.swift */; };
 		6F6271AC201C1916008A9AF2 /* Events.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6271AB201C1916008A9AF2 /* Events.swift */; };
+		6F684C49204DC60D00B89824 /* iCarousel.m in Sources */ = {isa = PBXBuildFile; fileRef = 6F684C48204DC60D00B89824 /* iCarousel.m */; };
+		6F684C4B204DC65100B89824 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F684C4A204DC64800B89824 /* QuartzCore.framework */; };
 		6F6ED76D202C7DD200A0D254 /* Location.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6ED76C202C7DD200A0D254 /* Location.swift */; };
 		6F6ED76F202D373E00A0D254 /* ScrollableLabel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6F6ED76E202D373E00A0D254 /* ScrollableLabel.swift */; };
 		6F6ED772202D4D3800A0D254 /* AutoScrollLabel.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6F6ED773202D4D3800A0D254 /* AutoScrollLabel.framework */; };
@@ -77,6 +78,10 @@
 		6F6271A7201BF9A6008A9AF2 /* SettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsCell.swift; sourceTree = "<group>"; };
 		6F6271A9201BF9E6008A9AF2 /* Setting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Setting.swift; sourceTree = "<group>"; };
 		6F6271AB201C1916008A9AF2 /* Events.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Events.swift; sourceTree = "<group>"; };
+		6F684C46204DC60C00B89824 /* LUA Application-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LUA Application-Bridging-Header.h"; sourceTree = "<group>"; };
+		6F684C47204DC60D00B89824 /* iCarousel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = iCarousel.h; path = ../../../../../../iCarousel/iCarousel/iCarousel.h; sourceTree = "<group>"; };
+		6F684C48204DC60D00B89824 /* iCarousel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = iCarousel.m; path = ../../../../../../iCarousel/iCarousel/iCarousel.m; sourceTree = "<group>"; };
+		6F684C4A204DC64800B89824 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		6F6ED76C202C7DD200A0D254 /* Location.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Location.swift; sourceTree = "<group>"; };
 		6F6ED76E202D373E00A0D254 /* ScrollableLabel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollableLabel.swift; sourceTree = "<group>"; };
 		6F6ED771202D4D1000A0D254 /* AutoScrollLabel.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = AutoScrollLabel.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -99,9 +104,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6F684C4B204DC65100B89824 /* QuartzCore.framework in Frameworks */,
 				6F6ED772202D4D3800A0D254 /* AutoScrollLabel.framework in Frameworks */,
 				6F16656C20264CF200CA14AA /* WebKit.framework in Frameworks */,
-				6F16656A20264CDA00CA14AA /* InMobiSDK.framework in Frameworks */,
 				6F16656620264BE300CA14AA /* libsqlite3.0.tbd in Frameworks */,
 				6F16656820264BEC00CA14AA /* libz.tbd in Frameworks */,
 				6F18EA51202A55FA008A0FD6 /* MapKit.framework in Frameworks */,
@@ -147,6 +152,8 @@
 		6F5770361F5707CB002D548E /* LUA Application */ = {
 			isa = PBXGroup;
 			children = (
+				6F684C47204DC60D00B89824 /* iCarousel.h */,
+				6F684C48204DC60D00B89824 /* iCarousel.m */,
 				6F7C3EBC1F5BA5C6009CD2F4 /* LUA Application.entitlements */,
 				6FBDB5B71F6AF35D00E6B252 /* ApiService */,
 				6F44B0981F61C7280039D1BE /* Model */,
@@ -159,6 +166,7 @@
 				6F5770401F5707CB002D548E /* LaunchScreen.storyboard */,
 				6F5770431F5707CB002D548E /* Info.plist */,
 				6F7C3EBA1F5B9916009CD2F4 /* GoogleService-Info.plist */,
+				6F684C46204DC60C00B89824 /* LUA Application-Bridging-Header.h */,
 			);
 			path = "LUA Application";
 			sourceTree = "<group>";
@@ -222,6 +230,7 @@
 		B2D8BFDD0822552165D44876 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				6F684C4A204DC64800B89824 /* QuartzCore.framework */,
 				6F6ED773202D4D3800A0D254 /* AutoScrollLabel.framework */,
 				6F6ED771202D4D1000A0D254 /* AutoScrollLabel.framework */,
 				6F18EA50202A55FA008A0FD6 /* MapKit.framework */,
@@ -270,6 +279,7 @@
 					6F5770331F5707CA002D548E = {
 						CreatedOnToolsVersion = 8.2.1;
 						DevelopmentTeam = BQGU54C2FB;
+						LastSwiftMigration = 0910;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Keychain = {
@@ -372,6 +382,7 @@
 				6F6271A8201BF9A6008A9AF2 /* SettingsCell.swift in Sources */,
 				6F78E7081F5DA5B900598506 /* EventCell.swift in Sources */,
 				6F6ED76D202C7DD200A0D254 /* Location.swift in Sources */,
+				6F684C49204DC60D00B89824 /* iCarousel.m in Sources */,
 				6F320FE81F668B5E009ED6DF /* MenuCell.swift in Sources */,
 				6F44B09E1F65440F0039D1BE /* FiltersLauncher.swift in Sources */,
 				6F6ED76F202D373E00A0D254 /* ScrollableLabel.swift in Sources */,
@@ -529,16 +540,16 @@
 			baseConfigurationReference = 071AD76CB51FEE0C3B0CD421 /* Pods-LUA Application.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "LUA Application/LUA Application.entitlements";
 				DEVELOPMENT_TEAM = BQGU54C2FB;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/InMobiSDK",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LUA Application/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lua.LUA-Application";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LUA Application/LUA Application-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -548,16 +559,15 @@
 			baseConfigurationReference = 99E242465F4C00D7D569C284 /* Pods-LUA Application.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = "LUA Application/LUA Application.entitlements";
 				DEVELOPMENT_TEAM = BQGU54C2FB;
-				FRAMEWORK_SEARCH_PATHS = (
-					"$(inherited)",
-					"$(PROJECT_DIR)/Pods/InMobiSDK",
-				);
+				FRAMEWORK_SEARCH_PATHS = "$(inherited)";
 				INFOPLIST_FILE = "LUA Application/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.lua.LUA-Application";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LUA Application/LUA Application-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;

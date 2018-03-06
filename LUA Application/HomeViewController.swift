@@ -39,9 +39,6 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         setupCollectionView()
         
         //Navigation Bar Attributes
-        // ------- SYSTEM TYPE NAV LOGOUT -------- //
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .done, target: self, action: #selector(handleLogout))
-        
         navigationController?.navigationBar.isTranslucent = false
         
         //Firebase Authentication - Handles logout (Might be able to delete this)
@@ -105,16 +102,16 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Sort By", style: .plain, target: self, action: #selector(handleFilter)) //Change logout button to something else
         navigationItem.rightBarButtonItem?.tintColor = UIColor.white
-        
-        /*
-        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .plain, target: self, action: #selector(handleLogout)) //Change logout button to something else
-        navigationItem.leftBarButtonItem?.tintColor = UIColor.white
- */
-            
+ 
         //navigationItem.title = "Home"
-        let logo = UIImage(named: "Navigation Logo")
-        navigationItem.titleView = UIImageView(image: logo)
-        navigationItem.titleView?.contentMode = .scaleAspectFill
+        let logoImageView = UIImageView(image: UIImage(named: "Navigation Logo"))
+        logoImageView.contentMode = .scaleAspectFill
+        
+        let titleView = UIView(frame: CGRect(x: 0.0, y: 0.0, width: 44, height: 44))
+        logoImageView.frame = titleView.bounds
+        titleView.addSubview(logoImageView)
+        
+        navigationItem.titleView = titleView
     }
     
     
@@ -158,11 +155,11 @@ class HomeViewController: UICollectionViewController, UICollectionViewDelegateFl
             return homeFeedCell
         }
         
-        /*else if indexPath.item == 3 {
+        else if indexPath.item == 3 {
             let userProfileView = ProfilePageView()
             print("PROFILE PAGE: \(indexPath.item)")
             display(contentController: userProfileView, on: cell)
-        }*/
+        }
         
         return cell
     }
